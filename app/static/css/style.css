@@ -1,0 +1,33 @@
+.map_box { 
+    background-color: grey;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.pad {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.row-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.hold {
+    background-color: yellow;
+}
+
+.sell {
+    background-color: red;
+}
+
+.buy {
+    background-color: green;
+}
