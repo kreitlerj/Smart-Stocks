@@ -1,4 +1,5 @@
 # Dependencies
+import os
 import pandas as pd
 import numpy as np
 import datetime
@@ -22,9 +23,9 @@ graph = tf.get_default_graph()
 app = Flask(__name__)
 
 # load in the models
-ten_day_model = load_model("models/model_ten_day.h5")
-thirty_day_model = load_model("models/model_thirty_day.h5")
-sixty_day_model = load_model("models/model_sixty_day.h5")
+ten_day_model = load_model(os.path.join(os.path.dirname(__file__), 'model_ten_day.h5'))
+thirty_day_model = load_model(os.path.join(os.path.dirname(__file__), 'model_thirty_day.h5'))
+sixty_day_model = load_model(fn = os.path.join(os.path.dirname(__file__), 'model_sixty_day.h5'))
 
 @app.route("/")
 def index():
@@ -35,9 +36,9 @@ def index():
 # def dashboard():
 #     return render_template("dashboard.html")
 
-@app.route("/data_table")
-def data_table():
-    return render_template("data_table.html")
+# @app.route("/data_table")
+# def data_table():
+#     return render_template("data_table.html")
 
 @app.route("/current/<stock>")
 def stock_chart(stock):
