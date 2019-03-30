@@ -12,7 +12,7 @@
 -  Open the door for further development of a minute to minute stock prediction platform. 
 
 
-!Machine-Learning-and-Stock-Predictions/Screen Shot 2019-03-29 at 4.57.40 PM.png
+![Screen Shot](images/AI_Stock.png)
       
 
 # Step 1: Choosing a Model
@@ -36,27 +36,27 @@
 - Five years of stock data was collected spanning years 2010-2016.
 - Metrics used to train models were open, low, high, close and volume.
 
-![Screen%20Shot%202019-03-29%20at%204.57.40%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%204.57.40%20PM.png)
+![Screen%20Shot%202019-03-29%20at%204.57.40%20PM.png](images/Read_data.png) 
 
 # Step 3: Pre-processing Traning Data
 
 - Test data was scaled and preproccessed for each of the models (10 day, 30 day, 60 day) 
 
-![Screen%20Shot%202019-03-29%20at%205.01.35%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.01.35%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.01.35%20PM.png](images/Data_Pre-processing)
 
 # Step 4: Construction of Model and Layers 
 
 - Layers are added for each respective model
 
-![Screen%20Shot%202019-03-29%20at%205.03.52%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.03.52%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.03.52%20PM.png](images/Model_layers_sixty.png)
 
-![Screen%20Shot%202019-03-29%20at%205.04.24%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.04.24%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.04.24%20PM.png](images/Model_layers_thirty.png)
 
-![Screen%20Shot%202019-03-29%20at%205.04.59%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.04.59%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.04.59%20PM.png](images/Model_layers_ten.png)
 
 # Step 4: Training Models
 
-![Screen%20Shot%202019-03-29%20at%205.09.20%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.09.20%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.09.20%20PM.png](images/Model_training.png)
 
 # Step 5: ETL and API Call for Real Data
 
@@ -65,19 +65,19 @@
 - We settled on Alpha Vantage to pull the real data for the last year for the models to perform on. 
 
 
-![Screen%20Shot%202019-03-29%20at%205.14.14%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.14.14%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.14.14%20PM.png](images/Alpha_vantage_api.png)
 
 ## Data is pre-processed 
 
-![Screen%20Shot%202019-03-29%20at%205.16.34%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.16.34%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.16.34%20PM.png](images/Data_Pre-processing_2.png)
 
 ## Models are loaded
 
-![Screen%20Shot%202019-03-29%20at%205.17.48%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.17.48%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.17.48%20PM.png](images/Load_model.png)
 
 ## Predictions are calculated 
 
-![Screen%20Shot%202019-03-29%20at%205.18.46%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.18.46%20PM.png)
+![Screen%20Shot%202019-03-29%20at%205.18.46%20PM.png](images/Making_predictions.png)
 
 # Future Possibilities 
 
