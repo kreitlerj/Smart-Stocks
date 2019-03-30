@@ -39,17 +39,17 @@ function buildPredictionChart(data) {
         name: "Pred 30d"
     };
 
-    // var trace4 = {
-    //     x: dates,
-    //     y: ten_day,
-    //     type: "scatter",
-    //     name: "ten"
-    // };
+    var trace4 = {
+        x: dates,
+        y: ten_day,
+        type: "scatter",
+        name: "Pred 10d"
+    };
 
-    var d = [trace1, trace2, trace3];
+    var d = [trace1, trace2, trace3, trace4];
 
     var layout = {
-        title: "Close Predictions",
+        title: "Close Price Predictions",
         paper_bgcolor:"#222",
         plot_bgcolor: "#222",
         font: {
