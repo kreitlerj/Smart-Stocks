@@ -42,7 +42,7 @@
 
 - Test data was scaled and preproccessed for each of the models (10 day, 30 day, 60 day) 
 
-![Screen%20Shot%202019-03-29%20at%205.01.35%20PM.png](images/Data_Pre-processing)
+![Screen%20Shot%202019-03-29%20at%205.01.35%20PM.png](images/Data_Pre-processing.png)
 
 # Step 4: Construction of Model and Layers 
 
