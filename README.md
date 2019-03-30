@@ -12,7 +12,8 @@
 -  Open the door for further development of a minute to minute stock prediction platform. 
 
 
-![Screen%20Shot%202019-03-29%20at%205.24.18%20PM.png](attachment:Screen%20Shot%202019-03-29%20at%205.24.18%20PM.png)
+!Machine-Learning-and-Stock-Predictions/Screen Shot 2019-03-29 at 4.57.40 PM.png
+      
 
 # Step 1: Choosing a Model
 
