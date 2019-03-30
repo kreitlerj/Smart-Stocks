@@ -61,13 +61,13 @@ function inputChanged(ticker) {
     updateDashboard(ticker)
 }
 
-function buildStockChart(data) {
+// function buildStockChart(data) {
 
-};
+// };
 
-function buildCards(data) {
+// function buildCards(data) {
 
-};
+// };
 
 // function init() {
 //     // Grab a reference to the input element
