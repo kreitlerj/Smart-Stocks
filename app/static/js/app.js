@@ -1,28 +1,68 @@
-function buildLineChart(data) {
-    var sixty_day_pred = data.sixty;
-    var thirty_day_pred = data.thirty;
-    var ten_day_pred = data.ten;
-    var actual = data.actual;
+function buildPredictionChart(data) {
+    var prices = Object.values(data);
+    var dates = Object.keys(data);
 
-    console.log(actual);
+    dates.forEach(function(part, index) {
+        dates[index] = new Date(parseInt(part)).toISOString().split('T')[0]
+    })
+    var actual = []
+    var sixty_day = []
+    var thirty_day = []
+    var ten_day = []
+
+    prices.forEach(function(element) {
+        actual.push(element.close);
+        sixty_day.push(element.sixty);
+        thirty_day.push(element.thirty);
+        ten_day.push(element.ten);
+    })
 
     var trace1 = {
-        x: Object.keys(actual),
-        y: Object.values(actual),
+        x: dates,
+        y: actual,
         type: "scatter",
-        name: "actual"
+        name: "Actual"
     };
 
     var trace2 = {
-        x: Object.keys(sixty_day_pred),
-        y: Object.values(sixty_day_pred),
+        x: dates,
+        y: sixty_day,
         type: "scatter",
-        name: "sixty"
+        name: "Pred 60d"
     };
 
-    var d = [trace1, trace2];
+    var trace3 = {
+        x: dates,
+        y: thirty_day,
+        type: "scatter",
+        name: "Pred 30d"
+    };
 
-    Plotly.newPlot("plot", d);
+    // var trace4 = {
+    //     x: dates,
+    //     y: ten_day,
+    //     type: "scatter",
+    //     name: "ten"
+    // };
+
+    var d = [trace1, trace2, trace3];
+    var layout = {
+        paper_bgcolor:"#222",
+        plot_bgcolor: "#222",
+        font: {
+            color: "white"
+        }
+    }
+    Plotly.newPlot("plot", d, layout);
+    
+};
+
+function inputChanged(ticker) {
+    updateDashboard(ticker)
+}
+
+function buildStockChart(data) {
+
 };
 
 function buildCards(data) {
@@ -43,12 +83,17 @@ function buildCards(data) {
 //     });
 // };
 
-function updateDashboard() {
+function updateDashboard(stock) {
     // Create URL to 
-    var url = "/data";
-    d3.json(url, function(response) {
-        buildLineChart(response);
+    var url = "/data/" + stock;
+    d3.json(url, function(error, response) {
+        console.log(response)
+        buildPredictionChart(response);
     });
 };
 
-updateDashboard();
+function init() {
+    updateDashboard("AAPL")
+};
+
+init();
