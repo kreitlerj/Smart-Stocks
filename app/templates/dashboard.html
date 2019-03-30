@@ -46,42 +46,44 @@
     </nav>
   
     <div class="container-fluid">
-      <!-- <div class="row row-margin">
-        <div class="col-md-9">
-          <div id="plot2" style="height: 600px"></div>
-        </div>
-        <div class="col-md-3">
-          <div class="row">
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
-              <div class="card-header">Header</div>
-              <div class="card-body">
-                <h4 class="card-title">Primary card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="row row-margin">
         <div class="col-md-9">
-          <div id="plot" style="height: 600px"></div>
+          <div id="candlestick-plot" style="height: 600px"></div>
         </div>
         <div class="col-md-3">
           <div class="row">
             <div class="card border-primary mb-3" style="max-width: 20rem;">
-              <div class="card-header"></div>
-              <div class="card-body">
-                <h4 class="card-title">60 Day Prediction</h4>
+              <div class="card-header">Current Data</div>
+              <div class="card-body" id="current-stock">
+                <h4 class="card-title"></h4>
                 <p class="card-text"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-margin">
+        <div class="col-md-9">
+          <div id="pred-plot" style="height: 600px"></div>
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="card border-primary mb-3" style="max-width: 20rem;">
+              <div class="card-header">Close Price Prediction</div>
+              <div class="card-body">
+                <h4 class="card-title">60 Day Time Step</h4>
+                <p class="card-text" id="sixty_p"></p>
+                <p class="card-text" id="sixty_e"></p>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="card border-primary mb-3" style="max-width: 20rem;">
-              <div class="card-header"></div>
+              <div class="card-header">Close Price Prediction</div>
               <div class="card-body">
-                <h4 class="card-title">30 Day Prediction</h4>
-                <p class="card-text"></p>
+                <h4 class="card-title">30 Day Time Step</h4>
+                <p class="card-text" id="thirty_p"></p>
+                <p class="card-text" id="thirty_e"></p>
               </div>
             </div>
           </div>

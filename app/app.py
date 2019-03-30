@@ -39,7 +39,11 @@ def index():
 def data_table():
     return render_template("data_table.html")
 
-    
+@app.route("/current/<stock>")
+def stock_chart(stock):
+    url = "https://www.alphavantage.co/query?"
+    query_url = f"{url}function=&symbol={stock}&outputsize=full&apikey=JH6O3VJXUFU3WLSZ"
+
 # @app.route("/ticker")
 # def names():
 
@@ -60,18 +64,20 @@ def data(stock):
 
     df_filtered = df_transposed[yesterday : past_year] 
 
-    df_filtered.rename(columns={'4. close':'close', '3. low':'low', '2. high':'high', '5. volume':'volume'}, inplace=True)
+    df_filtered.rename(columns={'1. open': 'open', '4. close':'close', '3. low':'low', '2. high':'high', '5. volume':'volume'}, inplace=True)
     
-    df_filtered.drop('1. open', axis=1, inplace=True)
     
-    df_filtered = df_filtered[["close", "low", "high", "volume"]]
     
+    df_filtered.open = pd.to_numeric(df_filtered.open, errors='coerce')
     df_filtered.close = pd.to_numeric(df_filtered.close, errors='coerce')
     df_filtered.low = pd.to_numeric(df_filtered.low, errors='coerce')
     df_filtered.high = pd.to_numeric(df_filtered.high, errors='coerce')
     df_filtered.volume = pd.to_numeric(df_filtered.volume, errors='coerce')
     df_filtered.index = pd.to_datetime(df_filtered.index)
-    df_filtered = df_filtered.sort_index(ascending=True)   
+    df_filtered = df_filtered.sort_index(ascending=True)
+    valid = df_filtered   
+    df_filtered = df_filtered.drop('open', axis=1)
+    df_filtered = df_filtered[["close", "low", "high", "volume"]]
     
     #sixty day model
     dataset = df_filtered.values
@@ -152,18 +158,22 @@ def data(stock):
     valid_sixty_day = valid_sixty_day[-90:]
     valid_thirty_day = valid_thirty_day[-90:]
     valid_ten_day = valid_ten_day[-90:]
-    valid = df_filtered[['close']]
     valid = valid[-90:]
     valid['sixty'] = valid_sixty_day
     valid['thirty'] = valid_thirty_day
     valid['ten'] = valid_ten_day
+    sixty_error = (valid['close'] - valid['sixty']).mean()
+    thirty_error = (valid['close'] - valid['thirty']).mean()
+    ten_error = (valid['close'] - valid['ten']).mean()
+
     
     valid = valid.to_json(orient='index')
-
-    # sixty, thirty, ten = one_year_data("GOOG")
-    #data = {valid_sixty_day, valid_thirty_day, valid_ten_day}
+    # response = {}
+    # response['valid'] = valid
+    # response['predictions'] = {'sixty': sixty_day_pred, 'thirty': thirty_day_pred, 'ten': ten_day_pred}
+    # response['error'] = {'sixty': sixty_error, 'thirty': thirty_error, 'ten': ten_error}
+    
     return valid
-    # return jsonify({'sixty': valid_sixty_day, 'thirty': valid_thirty_day, 'ten': valid_ten_day, 'actual': valid_actual})
 
 if __name__ == "__main__":
     app.run(debug=False)
