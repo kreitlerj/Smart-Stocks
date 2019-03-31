@@ -23,9 +23,9 @@ graph = tf.get_default_graph()
 app = Flask(__name__)
 
 # load in the models
-ten_day_model = load_model(os.path.join(os.path.dirname(__file__), 'model_ten_day.h5'))
-thirty_day_model = load_model(os.path.join(os.path.dirname(__file__), 'model_thirty_day.h5'))
-sixty_day_model = load_model(fn = os.path.join(os.path.dirname(__file__), 'model_sixty_day.h5'))
+ten_day_model = load_model(os.path.join(os.path.dirname(__file__), 'models/model_ten_day.h5'))
+thirty_day_model = load_model(os.path.join(os.path.dirname(__file__), 'models/model_thirty_day.h5'))
+sixty_day_model = load_model(os.path.join(os.path.dirname(__file__), 'models/model_sixty_day.h5'))
 
 @app.route("/")
 def index():
