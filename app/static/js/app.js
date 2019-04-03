@@ -41,6 +41,8 @@ function buildPredictionChart(data, stock) {
         thirty_day.push(element.thirty);
         ten_day.push(element.ten);
     });
+    actual.pop();
+    var predictions = {"sixty": sixty_day.pop(), "thirty": thirty_day.pop(), "ten": ten_day.pop()}
     
     // Build the traces for the plot
     var trace1 = {
@@ -100,7 +102,7 @@ function buildPredictionChart(data, stock) {
     };
     
     // Build the prediction cards on the html page
-    buildPredCards(stock, errors);
+    buildPredCards(predictions, errors);
     
 };
 
@@ -165,17 +167,17 @@ function buildStockChart(data) {
 };
 
 // Define the function to populate the predictions cards on the page    
-function buildPredCards(stock, errors) {
+function buildPredCards(predictions, errors) {
     // define url to grab the current prediction
-    var url = "/predictions/" + stock;
+    //var url = "/predictions/" + stock;
     var error = errors;
-    var predictions;
+    var predictions = predictions;
     
     // Retrive the prediction for the current day from flask
-    d3.json(url, function(error, response) {
-        console.log(response);
-        predictions = response;
-    });
+    //d3.json(url, function(error, response) {
+    //    console.log(response);
+    //    predictions = response;
+    //});
     
     //var sixty_pred_error = {"pred": predictions.sixty, "error": error.sixty};
     //var thirty_pred_error = {"pred": predictions.thirty, "error": error.thirty};
@@ -233,7 +235,7 @@ function updateDashboard(stock) {
     // Retrive the data from flask to build the prediction chart and the candlestick chart input them into functions
     d3.json(url1, function(error, response) {
         console.log(response);
-        buildPredictionChart(response, stock);
+        buildPredictionChart(response);
         buildStockChart(response);
     });
 
