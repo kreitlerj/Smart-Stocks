@@ -162,13 +162,24 @@ function buildPredCards(predictions, errors) {
 
 function updateDashboard(stock) {
     // Create URL to grab data from the flask app
-    var url = "/data/" + stock;
-    d3.json(url, function(error, response) {
+    var url1 = "/data/" + stock;
+    d3.json(url1, function(error, response) {
         console.log(response);
         buildPredictionChart(response);
         buildStockChart(response);
-        //buildPredCards(response.predictions, response.error);
     });
+
+    // var url2 = "/predictions";
+    // d3.json(url2, function(error, response) {
+    //     console.log(response);
+    //     //buildPredCards(response);
+    // })
+
+    var url3 = "/current/" + stock;
+    d3.json(url3, function(error, response) {
+        console.log(response);
+    })
+
 
 };
 

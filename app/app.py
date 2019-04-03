@@ -13,7 +13,7 @@ from keras.models import load_model
 from numpy import array
 from functions import build_input
 import tensorflow as tf
-global graph,model
+global graph,model,current_sixty_pred,current_thirty_pred,current_ten_pred,sixty_error,thirty_error,ten_error
 graph = tf.get_default_graph()
 
 # initialize app
@@ -24,6 +24,9 @@ ten_day_model = load_model("models/model_ten_day.h5")
 thirty_day_model = load_model("models/model_thirty_day.h5")
 sixty_day_model = load_model("models/model_sixty_day.h5")
 
+# declare variables
+predictions = 0
+
 @app.route("/")
 def index():
     """Return the homepage."""
@@ -33,14 +36,20 @@ def index():
 # def dashboard():
 #     return render_template("dashboard.html")
 
-@app.route("/data_table")
-def data_table():
-    return render_template("data_table.html")
+# @app.route("/prediction")
+# def prediction():
+    
+    
 
 @app.route("/current/<stock>")
 def stock_chart(stock):
     url = "https://www.alphavantage.co/query?"
-    query_url = f"{url}function=&symbol={stock}&outputsize=full&apikey=JH6O3VJXUFU3WLSZ"
+    query_url = f"{url}function=TIME_SERIES_INTRADAY&symbol=AAPL&interval=1min&apikey=JH6O3VJXUFU3WLSZ" 
+    response = requests.get(query_url).json() 
+    df = pd.DataFrame(response["Time Series (1min)"])
+    data = df.iloc[:, 0]
+    current_data = data.to_json(orient='index')
+    return (current_data)
 
 
 
@@ -106,9 +115,13 @@ def data(stock):
     thirty_error = (valid['close'] - valid['thirty']).mean()
     ten_error = (valid['close'] - valid['ten']).mean()
 
-    #output to json
-    valid = valid.to_json(orient='index')
     
+    # predictions = pd.DataFrame(data = {"sixty": {"prediction": current_sixty_pred[0][0], "error": sixty_error},
+    #             "thirty": {"prediction": current_thirty_pred[0][0], "error": thirty_error},
+    #             "ten": {"prediction": current_ten_pred[0][0], "error": ten_error}})
+    # predictions = predictions.to_json(orient='columns')
+    valid = valid.to_json(orient='index')
+   
     return valid
 
 if __name__ == "__main__":
