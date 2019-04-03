@@ -18,6 +18,7 @@ function errorCalc(close, pred) {
     error = sum / diff.length;
     
     return error;
+};
 
 // Define the function to build the predictions plot    
 function buildPredictionChart(data, stock) {
@@ -41,9 +42,11 @@ function buildPredictionChart(data, stock) {
         thirty_day.push(element.thirty);
         ten_day.push(element.ten);
     });
+    dates.pop();
     actual.pop();
-    var predictions = {"sixty": sixty_day.pop(), "thirty": thirty_day.pop(), "ten": ten_day.pop()}
     
+    var predictions = {"sixty": sixty_day.pop(), "thirty": thirty_day.pop(), "ten": ten_day.pop()}
+
     // Build the traces for the plot
     var trace1 = {
         x: dates,
@@ -134,6 +137,11 @@ function buildStockChart(data) {
         low.push(element.low);
     });
     
+    dates.pop();
+    open.pop();
+    close.pop();
+    high.pop();
+    low.pop();
     // Build the trace for the plot
     var trace = {
         x: dates,
@@ -173,16 +181,6 @@ function buildPredCards(predictions, errors) {
     var error = errors;
     var predictions = predictions;
     
-    // Retrive the prediction for the current day from flask
-    //d3.json(url, function(error, response) {
-    //    console.log(response);
-    //    predictions = response;
-    //});
-    
-    //var sixty_pred_error = {"pred": predictions.sixty, "error": error.sixty};
-    //var thirty_pred_error = {"pred": predictions.thirty, "error": error.thirty};
-    //var thirty_pred_error = {"pred": predictions.ten, "error": error.ten};
-    
     document.getElementById("sixty_pred").innerHTML = "Prediction: " + predictions.sixty;
     document.getElementById("sixty_error").innerHTML = "Mean Error: " + error.sixty;
     document.getElementById("thirty_pred").innerHTML = "Prediction: " + predictions.thirty;
@@ -204,21 +202,9 @@ function buildCurrentCard(data) {
     document.getElementById("low").innerHTML = "Low: " + low;
     document.getElementById("volume").innerHTML = "Volume: " + volume;
     document.getElementById("current").innerHTML = "Current Price: " + current;
+};
 
 
-// function init() {
-//     // Grab a reference to the input element
-//     var selector = d3.select("#ticker-dataset");
-
-//     // Use the list of ticker names to populate the input options
-//     d3.json("/ticker").then((tickers) => {
-//         tickers.forEach((ticker) => {
-//         selector
-//             .append("option")
-//             .property("value", ticker);
-//         });
-//     });
-// };
 
 // Define the funtion to update the page    
 function updateDashboard(stock) {
@@ -232,17 +218,11 @@ function updateDashboard(stock) {
         buildStockChart(response);
     });
 
-    // var url2 = "/predictions";
-    // d3.json(url2, function(error, response) {
-    //     console.log(response);
-    //     //buildPredCards(response);
-    // })
-
     var url2 = "/current/" + stock;
     d3.json(url2, function(error, response) {
         console.log(response);
-    })
-
+        buildCurrentCard(response);
+    });
 
 };
 
