@@ -11,7 +11,7 @@ from flask import Flask, jsonify, render_template
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import load_model
 from numpy import array
-from functions import build_input
+from functions import build_input, build_current_input
 import tensorflow as tf
 global graph,model,current_sixty_pred,current_thirty_pred,current_ten_pred,sixty_error,thirty_error,ten_error
 graph = tf.get_default_graph()
@@ -37,10 +37,54 @@ def index():
 #     return render_template("dashboard.html")
 
 # @app.route("/prediction")
-# def prediction():
-    
+# def prediction(stock):
+    #yesterday = datetime.strftime(datetime.now() '%Y-%m-%d')
+    #yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
+    #past_year = datetime.strftime(datetime.now() - timedelta(366), '%Y-%m-%d')
     
 
+    url = "https://www.alphavantage.co/query?"
+    query_url = f"{url}function=TIME_SERIES_DAILY&symbol={stock}&apikey=JH6O3VJXUFU3WLSZ" 
+
+    response = requests.get(query_url).json() 
+
+    df = pd.DataFrame(response["Time Series (Daily)"]) 
+
+    df_transposed = df.T # or df1.transpose()
+
+    df_filtered = df_transposed[yesterday : past_year] 
+
+    #format the input dataframe
+    df_filtered.rename(columns={'1. open': 'open', '4. close':'close', '3. low':'low', '2. high':'high', '5. volume':'volume'}, inplace=True)
+    df_filtered.open = pd.to_numeric(df_filtered.open, errors='coerce')
+    df_filtered.close = pd.to_numeric(df_filtered.close, errors='coerce')
+    df_filtered.low = pd.to_numeric(df_filtered.low, errors='coerce')
+    df_filtered.high = pd.to_numeric(df_filtered.high, errors='coerce')
+    df_filtered.volume = pd.to_numeric(df_filtered.volume, errors='coerce')
+    df_filtered.index = pd.to_datetime(df_filtered.index)
+    df_filtered = df_filtered.sort_index(ascending=True)
+    df_filtered = df_filtered[["open", "close", "low", "high", "volume"]]
+    
+    # Build the input
+    current_sixty, current_thirty, current_ten, y_scalar = build_current_input(df_filtered)
+    
+    #run the models
+    with graph.as_default():
+        current_sixty_pred = sixty_day_model.predict(current_sixty)
+        current_thirty_pred = thirty_day_model.predict(current_thirty)
+        current_ten_pred = ten_day_model.predict(current_ten)
+    
+    current_sixty_pred = y_scalar.inverse_transform(current_sixty_pred)
+    current_thirty_pred = y_scalar.inverse_transform(current_thirty_pred)
+    current_ten_pred = y_scalar.inverse_transform(current_ten_pred)
+    
+    predictions = pd.DataFrame(data = {"sixty": {"prediction": current_sixty_pred[0][0]},
+                 "thirty": {"prediction": current_thirty_pred[0][0]},
+                 "ten": {"prediction": current_ten_pred[0][0]}})
+    predictions = predictions.to_json(orient='columns')
+    
+    return predictions
+    
 @app.route("/current/<stock>")
 def stock_chart(stock):
     url = "https://www.alphavantage.co/query?"
@@ -55,6 +99,7 @@ def stock_chart(stock):
 
 @app.route("/data/<stock>")
 def data(stock):
+    #yesterday = datetime.strftime(datetime.now() '%Y-%m-%d')
     yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
     past_year = datetime.strftime(datetime.now() - timedelta(366), '%Y-%m-%d')
     
@@ -109,12 +154,6 @@ def data(stock):
     valid['sixty'] = valid_sixty_day
     valid['thirty'] = valid_thirty_day
     valid['ten'] = valid_ten_day
-
-    #set error variables
-    sixty_error = (valid['close'] - valid['sixty']).mean()
-    thirty_error = (valid['close'] - valid['thirty']).mean()
-    ten_error = (valid['close'] - valid['ten']).mean()
-
     
     # predictions = pd.DataFrame(data = {"sixty": {"prediction": current_sixty_pred[0][0], "error": sixty_error},
     #             "thirty": {"prediction": current_thirty_pred[0][0], "error": thirty_error},
