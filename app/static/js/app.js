@@ -182,25 +182,13 @@ function buildPredCards(predictions, errors) {
     //var sixty_pred_error = {"pred": predictions.sixty, "error": error.sixty};
     //var thirty_pred_error = {"pred": predictions.thirty, "error": error.thirty};
     //var thirty_pred_error = {"pred": predictions.ten, "error": error.ten};
-
-    d3.select("#sixty_p")
-        .selectAll("p")
-        .data(sixty_pred_error)
-        .enter()
-        .append("p")
-        .text(function(d) {
-            return "Prediction: " + String(d.pred);
-        });
     
-        d3.select("#sixty_e")
-        .selectAll("p")
-        .data(sixty_pred_error)
-        .enter()
-        .append("p")
-        .text(function(d) {
-            return "Mean Error: " + String(sixty_pred_error.err);
-        });
-
+    document.getElementById("sixty_pred").innerHTML = "Prediction: " + predictions.sixty;
+    document.getElementById("sixty_error").innerHTML = "Mean Error: " + error.sixty;
+    document.getElementById("thirty_pred").innerHTML = "Prediction: " + predictions.thirty;
+    document.getElementById("thirty_error").innerHTML = "Mean Error: " + error.thirty;
+    document.getElementById("ten_pred").innerHTML = "Prediction: " + predictions.ten;
+    document.getElementById("ten_error").innerHTML = "Mean Error: " + error.ten;
 };
 
 // Define the function to populate the current data card on the page    
@@ -211,6 +199,11 @@ function buildCurrentCard(data) {
     var current = data["4. close"];
     var volume = data["5. volume"];
     
+    document.getElementById("open").innerHTML = "Open: " + open;
+    document.getElementById("high").innerHTML = "High: " + high;
+    document.getElementById("low").innerHTML = "Low: " + low;
+    document.getElementById("volume").innerHTML = "Volume: " + volume;
+    document.getElementById("current").innerHTML = "Current Price: " + current;
 
 
 // function init() {
