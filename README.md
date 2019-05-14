@@ -1,8 +1,8 @@
 
 # Smart Stocks
-## Using an LSTM Model To Predict Closing Stock Prices
+### Using an LSTM Model To Predict Closing Stock Prices
 
-
+#### -- Project Status: Active
 
 
 ## Goals:
@@ -34,8 +34,5 @@
 * Bootstrap
 * Flask
 
-## Needs of this project
-- frontend developers
-- data exploration/descriptive statistics
-- data processing/cleaning
-- statistical modeling
+## Project Description
+This project combines machine learning with a flask web app to demostrate to the end user how machine learning can be used to predict closing stock prices.  The three models use different time steps (60 day, 30 day, and 10 day) to predict end of day closing prices (if the market is still open).  Data is grabbed realtime from [Alpha Vantage](https://www.alphavantage.co/documentation/) and ran on the pre-trained models.  The predictions are then fed to JavaScript on the frontend to be presented to the end user.  Using Plotly.js, the user is presented with a line graph to show how well the models did over the last 90 days of trading.  Since the data is grabbed realtime, the user can select any stock by ticker symbol. The app is deployed on Heroku and can be found [here](https://smart-stocks.herokuapp.com/)
